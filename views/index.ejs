@@ -13,10 +13,55 @@
     <script src="js/main.js"></script>
   </head>
   <body ng-app="redisApp" ng-controller="MainController">
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
 
-	
+    <div class="container">
+      <div class="row">
+        <h1>Redis Geo Commands Demo App</h1>
+
+        <div class="col-xs-12">
+          <form>
+          <div class="form-group">
+          <label>Twitter Handle</label>
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1">@</span>
+              <input type="text" class="form-control"  placeholder="twitter handle" ng-model="twitterHandle">
+            </div>
+
+
+            <label>Miles Away</label>
+                <input type="number" class="form-control" placeholder="miles away" ng-model="radius">
+                <br>
+          <button class="btn btn-primary" ng-click="getUsers(twitterHandle, radius)">See who's around!</button>
+        </div>
+      </form>
+
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <table class="table">
+            <thead>
+              <tr>
+                <th> USER
+                </th>
+              <th> MILES AWAY FROM YOU
+              </th>
+              <th>Longitude</th>
+              <th>Latitude</th>
+              </tr>
+            </thead>
+          <tr ng-repeat="user in users">
+            <td>{{user[0]}}</td>
+            <td>{{user[1]}}</td>
+            <td>{{user[3][0]}}</td>
+            <td>{{user[3][1]}}</td>
+          </tr>
+        </table>
+        </div>
+      </div>
+    </div>
+
+
 
 
   </body>

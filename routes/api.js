@@ -16,13 +16,13 @@ router.get('/getAll', function(req, res, next) {
 		if(error) return res.status(400).send(error);
 		async.forEach(JSON.parse(body), function(user, callback){
 			console.log('user :', user);
-			client.geoadd("redisConfAtt", user.lng, user.lat, `user:${user.twitterHandle}`, function(err, reply){
+			client.geoadd("redisConfAtt", user.lng, user.lat, `${user.twitterHandle}`, function(err, reply){
 				//If success!
 				callback(err);
 			});
 		}, function(err){
 			if(err) return res.status(400).send(err);
-			res.send();
+			res.send(body);
 		})
 	})
 });
@@ -30,10 +30,16 @@ router.get('/getAll', function(req, res, next) {
 router.get('/matches/:twitterHandle/:radius', function(req, res){
 	var twitterHandle = '@' + req.params.twitterHandle;
 	var radius = req.params.radius;
-	client.georadiusbymember("redisConfAtt", `user:${twitterHandle}`, radius, "mi", "withdist", "ASC", function(err, users){
+	// client.georadiusbymember("redisConfAtt", `${twitterHandle}`, radius, "mi", "withdist", "ASC", function(err, users){
+	// 	if(err) return res.status(400).send(err);
+	// 	res.send(users);
+	// })
+
+	client.georadiusbymember("redisConfAtt", `${twitterHandle}`, radius, "mi", "withcoord", "withdist", "withhash", "ASC", function(err, users){
 		if(err) return res.status(400).send(err);
 		res.send(users);
 	})
+
 })
 
 module.exports = router;
