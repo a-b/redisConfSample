@@ -35,7 +35,7 @@ router.get('/matches/:twitterHandle/:radius', function(req, res){
 	// 	res.send(users);
 	// })
 
-	client.georadiusbymember("redisConfAtt", `${twitterHandle}`, radius, "mi", "withcoord", "withdist", "withhash", "ASC", function(err, users){
+	client.georadiusbymember("redisConfAtt", `${twitterHandle}`, radius, "mi", "withcoord", "withdist", "ASC", function(err, users){
 		if(err) return res.status(400).send(err);
 		res.send(users);
 	})
