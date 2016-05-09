@@ -9,20 +9,16 @@
 
 
 	function MainController($scope, MainService){
-		MainService.getAllUsers()
-		.then(function(res){
-			console.log("get all res", res);
-		}, function(err){
-			console.error(err);
-
-		});
+		MainService.getAllUsers();
 
 		$scope.getUsers = function(twitter, radius){
 			twitter = twitter.replace('@', '');
 			MainService.getUsersInRadius(twitter, radius)
 			.then(function(res){
-				console.log("radius res", res);
 				$scope.users = res.data;
+				$scope.users.forEach(function(user){
+					user[1] = Math.floor(user[1]);
+				});
 			}, function(err){
 				console.error(err);
 			});
